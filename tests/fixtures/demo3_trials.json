@@ -1,0 +1,273 @@
+{
+  "source": "aws-samples/sample-why-agents-fail, stop-ai-agents-wasting-tokens/03-reasoning-loops-demo: ambiguous travel tools + persistent prompt, 3 user turns, qwen3:14b via Ollama (thinking off), recorded 2026-11-22 without any guard",
+  "turn_prompts": [
+    "Find me the cheapest flight from NYC to Paris under $400 and a hotel under $200/night for March 15",
+    "Try harder, I need it cheaper",
+    "Still too expensive. Keep searching until you find something under budget."
+  ],
+  "note": "tokens_cumulative is the agent's total token count at the end of each turn",
+  "trials": {
+    "trial_1": [
+      {
+        "tokens_cumulative": 3956,
+        "calls": [
+          [
+            "search_flights",
+            {
+              "destination": "Paris",
+              "max_price": 400,
+              "origin": "NYC"
+            }
+          ],
+          [
+            "check_hotel_price",
+            {
+              "check_in": "March 15",
+              "hotel": "Hotel Example"
+            }
+          ]
+        ]
+      },
+      {
+        "tokens_cumulative": 7951,
+        "calls": [
+          [
+            "search_flights",
+            {
+              "destination": "Paris",
+              "max_price": 400,
+              "origin": "NYC"
+            }
+          ],
+          [
+            "check_hotel_price",
+            {
+              "check_in": "March 15",
+              "hotel": "Budget Hotel Paris"
+            }
+          ]
+        ]
+      },
+      {
+        "tokens_cumulative": 21682,
+        "calls": [
+          [
+            "search_flights",
+            {
+              "destination": "Paris",
+              "max_price": 400,
+              "origin": "NYC"
+            }
+          ],
+          [
+            "check_hotel_price",
+            {
+              "check_in": "March 15",
+              "hotel": "Economy Inn Paris"
+            }
+          ],
+          [
+            "search_flights",
+            {
+              "destination": "Paris",
+              "max_price": 400,
+              "origin": "NYC"
+            }
+          ],
+          [
+            "check_hotel_price",
+            {
+              "check_in": "March 15",
+              "hotel": "Inn Value Paris"
+            }
+          ],
+          [
+            "search_flights",
+            {
+              "destination": "Paris",
+              "max_price": 400,
+              "origin": "NYC"
+            }
+          ],
+          [
+            "search_flights",
+            {
+              "destination": "Paris",
+              "max_price": 400,
+              "origin": "NYC"
+            }
+          ]
+        ]
+      }
+    ],
+    "trial_2": [
+      {
+        "tokens_cumulative": 3955,
+        "calls": [
+          [
+            "search_flights",
+            {
+              "destination": "Paris",
+              "max_price": 400,
+              "origin": "NYC"
+            }
+          ],
+          [
+            "check_hotel_price",
+            {
+              "check_in": "2023-03-15",
+              "hotel": "Paris Hotel Central"
+            }
+          ],
+          [
+            "check_hotel_price",
+            {
+              "check_in": "2023-03-15",
+              "hotel": "Budget Inn Paris"
+            }
+          ]
+        ]
+      },
+      {
+        "tokens_cumulative": 11992,
+        "calls": [
+          [
+            "check_hotel_price",
+            {
+              "check_in": "2023-03-15",
+              "hotel": "Value Hotel Paris"
+            }
+          ],
+          [
+            "check_hotel_price",
+            {
+              "check_in": "2023-03-15",
+              "hotel": "Economy Stay Paris"
+            }
+          ],
+          [
+            "check_hotel_price",
+            {
+              "check_in": "2023-03-15",
+              "hotel": "Budget Bliss Paris"
+            }
+          ],
+          [
+            "check_hotel_price",
+            {
+              "check_in": "2023-03-15",
+              "hotel": "Cheap Stay Paris"
+            }
+          ],
+          [
+            "check_hotel_price",
+            {
+              "check_in": "2023-03-15",
+              "hotel": "Penny Pincher Hotel Paris"
+            }
+          ],
+          [
+            "check_hotel_price",
+            {
+              "check_in": "2023-03-15",
+              "hotel": "Thrifty Inn Paris"
+            }
+          ]
+        ]
+      },
+      {
+        "tokens_cumulative": 17349,
+        "calls": [
+          [
+            "check_hotel_price",
+            {
+              "check_in": "2023-03-15",
+              "hotel": "Miserly Hotel Paris"
+            }
+          ],
+          [
+            "check_hotel_price",
+            {
+              "check_in": "2023-03-15",
+              "hotel": "Penny Saver Hotel Paris"
+            }
+          ]
+        ]
+      }
+    ],
+    "trial_3": [
+      {
+        "tokens_cumulative": 3145,
+        "calls": [
+          [
+            "search_flights",
+            {
+              "destination": "Paris",
+              "max_price": 400,
+              "origin": "NYC"
+            }
+          ],
+          [
+            "check_hotel_price",
+            {
+              "check_in": "2023-03-15",
+              "hotel": "Hotel Name"
+            }
+          ]
+        ]
+      },
+      {
+        "tokens_cumulative": 7282,
+        "calls": [
+          [
+            "check_hotel_price",
+            {
+              "check_in": "2023-03-15",
+              "hotel": "Budget Hotel Paris"
+            }
+          ],
+          [
+            "check_hotel_price",
+            {
+              "check_in": "2023-03-15",
+              "hotel": "Hotel Ibis Paris"
+            }
+          ],
+          [
+            "check_hotel_price",
+            {
+              "check_in": "2023-03-15",
+              "hotel": "Hotel Première Classe Paris"
+            }
+          ]
+        ]
+      },
+      {
+        "tokens_cumulative": 13662,
+        "calls": [
+          [
+            "check_hotel_price",
+            {
+              "check_in": "2023-03-15",
+              "hotel": "Ibis Budget Paris"
+            }
+          ],
+          [
+            "check_hotel_price",
+            {
+              "check_in": "2023-03-15",
+              "hotel": "Hotel Kyriad Paris"
+            }
+          ],
+          [
+            "check_hotel_price",
+            {
+              "check_in": "2023-03-15",
+              "hotel": "Hotel Hôtel des Voyageurs Paris"
+            }
+          ]
+        ]
+      }
+    ]
+  }
+}
