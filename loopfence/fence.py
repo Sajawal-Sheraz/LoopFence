@@ -6,9 +6,9 @@ import functools
 import inspect
 import time
 import uuid
-from collections.abc import Callable, Mapping
+from collections.abc import Callable, Iterable, Mapping
 from pathlib import Path
-from typing import Any, TypeVar, overload
+from typing import TYPE_CHECKING, Any, TypeVar, overload
 
 from . import rules
 from .canonical import call_signature, normalize, result_hash
@@ -17,6 +17,9 @@ from .exceptions import BudgetExceededError, LoopDetectedError, RunStoppedError,
 from .models import RUN_LIMIT_RULES, Action, Decision, SessionState, ToolCall, TraceEvent
 from .store import InMemoryStore, SessionStore
 from .trace import dumps, summarize, trace_document
+
+if TYPE_CHECKING:
+    from .adapters.strands import LoopFenceHook
 
 _SKIP_PARAMS = frozenset({"self", "cls"})
 _F = TypeVar("_F", bound=Callable[..., Any])
@@ -193,7 +196,7 @@ class LoopFence:
             raise LoopDetectedError(decision.message, **kwargs)
         raise RunStoppedError(decision.message, **kwargs)
 
-    # -------------------------------------------------------------- decorator
+    # --------------------------------------------------------------- adapters
 
     @overload
     def protect(self, fn: _F, /) -> _F: ...
@@ -260,6 +263,12 @@ class LoopFence:
         if fn is not None:
             return decorate(fn)
         return decorate
+
+    def strands_hook(self, *, pollable_tools: Iterable[str] = ()) -> LoopFenceHook:
+        """A Strands ``HookProvider`` bound to this fence. Requires ``loopfence[strands]``."""
+        from .adapters.strands import LoopFenceHook
+
+        return LoopFenceHook(self, pollable_tools=pollable_tools)
 
     # ----------------------------------------------------------------- helpers
 
