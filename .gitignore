@@ -23,8 +23,6 @@ htmlcov/
 .ruff_cache/
 
 # Environment and secrets
-.env
-.env.*
 !.env.example
 *.pem
 *.key
@@ -40,9 +38,10 @@ replay_output/
 
 # Editors and OS
 .idea/
-.vscode/
 *.swp
 .DS_Store
 
 # Example run output
 examples/**/traces/
+config.bat
+node_modules

@@ -84,13 +84,36 @@ or fluctuating output is noise, not progress.
 decision: `tool_call` (allow/block/stop plus the rule), `tool_result` (hash), `llm_call`, and
 `usage`. With an injected clock (`LoopFence(clock=...)`) the trace is byte-identical across runs.
 
-## Live demo
+## Live demos
 
-Runs demo 3's ambiguous travel tools against a local Ollama model, with and without the fence:
+Both demos run against a local Ollama model (`qwen3:14b` by default), with and without the fence.
+Set `LLM_BASE_URL`, `LLM_MODEL` and `LLM_API_KEY` to use another OpenAI-compatible server.
+
+**Runaway retry** (`examples/runaway_retry/`): an order-status tool always returns a 503, and
+the agent is told to retry until it succeeds.
+
+```bash
+uv run python examples/runaway_retry/run.py --trials 2
+```
+
+| Run | Tool calls | Tokens |
+|-----|-----------:|-------:|
+| unfenced | 6–11 | 5,865–13,851 |
+| fenced | 2 (3rd blocked by `exact_repeat`) | 2,736–3,112 |
+
+After a single block the agent stopped retrying and told the customer the service was down,
+without inventing a status. These numbers come from two trials on one model, so treat them as an
+illustration, not a benchmark.
+
+**Travel agent** (`examples/strands_travel/`): demo 3's ambiguous travel tools over three pushy
+user turns.
 
 ```bash
 uv run python examples/strands_travel/run.py --trials 2
 ```
+
+A block saves the tool execution, not the LLM call that requested it. Tokens are saved when the
+agent gives up after a block, or when a stop rule (budget, timeout, `max_blocks`) ends the run.
 
 ## Known limitations
 
